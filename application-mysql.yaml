@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gotham-pod-app
+  namespace: argocd
+
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/brandaoob/gotham-chart-pod.git
+    targetRevision: master
+    path: manifests
+    directory:
+      recurse: true
+    helm:
+      enabled: false  # <- ESSA LINHA É A CHAVE!
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gotham-hml
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

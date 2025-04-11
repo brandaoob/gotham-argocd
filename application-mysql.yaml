@@ -3,16 +3,12 @@ kind: Application
 metadata:
   name: gotham-pod-app
   namespace: argocd
-
 spec:
   project: default
   source:
     repoURL: https://github.com/brandaoob/gotham-chart-pod.git
     targetRevision: master
     path: manifests
-    directory:
-      recurse: true
-      include: "*.yaml"   # opcional, mas ajuda
   destination:
     server: https://kubernetes.default.svc
     namespace: gotham-hml

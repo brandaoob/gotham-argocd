@@ -12,8 +12,7 @@ spec:
     path: manifests
     directory:
       recurse: true
-    helm:
-      enabled: false  # <- ESSA LINHA É A CHAVE!
+      include: "*.yaml"   # opcional, mas ajuda
   destination:
     server: https://kubernetes.default.svc
     namespace: gotham-hml

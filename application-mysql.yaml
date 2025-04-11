@@ -9,6 +9,7 @@ spec:
     repoURL: https://github.com/brandaoob/gotham-chart-pod.git
     targetRevision: master
     path: manifests
+    kustomize: {}  # <- força o ArgoCD a usar Kustomize
   destination:
     server: https://kubernetes.default.svc
     namespace: gotham-hml

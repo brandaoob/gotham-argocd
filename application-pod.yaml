@@ -3,17 +3,14 @@ kind: Application
 metadata:
   name: gotham-pod-app
   namespace: argocd
-
 spec:
   project: default
 
   source:
     repoURL: https://github.com/brandaoob/gotham-chart-pod.git
     targetRevision: master
-    path: . # se o chart estiver na raiz do repo
-    helm:
-      valueFiles:
-        - values-hml-pod.yaml
+    path: manifests # <- esse é o diretório onde está o kustomization.yaml
+    # REMOVA a seção helm completamente
 
   destination:
     server: https://kubernetes.default.svc
@@ -25,4 +22,3 @@ spec:
     automated:
       selfHeal: true
       prune: true
-

@@ -1,24 +1,26 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: argoproj.io/v1alpha1                                               # define a versão da API do ArgoCD
+kind: Application                                                              # define o tipo do recurso como Application (recurso do ArgoCD)
+
 metadata:
-  name: gotham-pod-app
-  namespace: argocd
+  name: gotham-pod-app                                                         # nome da aplicação dentro do ArgoCD
+  namespace: argocd                                                            # namespace onde o ArgoCD está rodando
+
 spec:
-  project: default
+  project: default                                                             # usa o projeto padrão do ArgoCD
 
   source:
-    repoURL: https://github.com/brandaoob/gotham-chart-pod.git
-    targetRevision: master
-    path: manifests # <- esse é o diretório onde está o kustomization.yaml
-    # REMOVA a seção helm completamente
+    repoURL: https://github.com/brandaoob/gotham-chart-pod.git                 # aponta para o repositório Git com os manifests
+    targetRevision: master                                                     # usa a branch master do repositório
+    path: manifests                                                            # caminho dentro do repositório onde está o kustomization.yaml
+    # REMOVA a seção helm completamente                                        # <- instrução para não usar ou usar o Helm aqui
 
   destination:
-    server: https://kubernetes.default.svc
-    namespace: gotham-hml
+    server: https://kubernetes.default.svc                                     # faz o deploy no cluster onde o ArgoCD está rodando
+    namespace: gotham-hml                                                      # aplica os recursos dentro desse namespace no cluster
 
   syncPolicy:
     syncOptions:
-      - CreateNamespace=true
+      - CreateNamespace=true                                                   # cria automaticamente o namespace se ele não existir
     automated:
-      selfHeal: true
-      prune: true
+      selfHeal: true                                                           # corrige automaticamente desvios do estado do Git
+      prune: true                                                              # remove recursos que foram deletados do Git
